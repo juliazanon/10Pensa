@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %} Home {% endblock title %}
+{% block content %}
+    {% for produto in object_list %}
+        <div class="post-entry">
+            <h1>{{ produto.nome }}</h1>
+            <p>{{ produto.validade }}</p>
+        </div>
+    {% endfor %}
+{% endblock content %}

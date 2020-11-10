@@ -9,6 +9,8 @@ class Produto(models.Model):
     validade = models.DateField()
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    objects = models.Manager()
+
     class Meta:
         ordering = ('validade',)
 
