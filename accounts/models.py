@@ -13,6 +13,7 @@ class Produto(models.Model):
     usuario = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.SET_NULL)
 
+    objects = models.Manager()
 
     class Meta:
         ordering = ('validade',)

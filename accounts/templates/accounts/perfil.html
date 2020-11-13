@@ -11,7 +11,7 @@
 <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#excluirModal" role="button ">Excluir Usuário</a> -->
 
 
-
+<a href="{% url 'produto_new' %}">+ Novo Produto</a>
     {% for produto in object_list %}
         <div class="post-entry">
             <div class="nav-left">
@@ -23,4 +23,5 @@
             </div>
         </div>
     {% endfor %}
+    
 {% endblock content %}

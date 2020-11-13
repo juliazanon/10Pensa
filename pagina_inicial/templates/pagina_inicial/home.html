@@ -8,7 +8,7 @@
             <h1 class="mt-5">Bem-vindo ao 10Pensa!</h1>
             {% if user.is_authenticated %}
             <p class="lead">Entre no seu perfil para visualizar a despensa</p>
-            <a class="nav-link" href="#">Perfil</a>
+            <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
             {% else %}
             <p class="lead">Faça login para ter acesso à sua despensa.</p>
             <p><a class="nav-link" href="{% url 'login' %}">login</a></p>

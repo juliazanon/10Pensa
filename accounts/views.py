@@ -18,6 +18,9 @@ class ProdutoListView(ListView):
     model = Produto
     template_name = 'accounts/perfil.html'
 
+    def get_queryset(self):
+        return Produto.objects.filter(usuario=self.request.user)
+
 class ProdutoCreateView(CreateView):
     model = Produto
     template_name = 'accounts/produto_new.html'
