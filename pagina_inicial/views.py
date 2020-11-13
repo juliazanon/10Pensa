@@ -16,3 +16,4 @@ class PaginaUpdateView(UpdateView):
     model = Produto
     template_name = 'pagina_inicial/produto_edit.html'
     fields = '__all__'
+

@@ -8,3 +8,7 @@ class SignUpView(generic.CreateView):
     form_class = UserCreationFormWithEmail
     success_url = reverse_lazy('login')
     template_name = 'accounts/signup.html'
+
+
+def perfil(request):
+    return render(request, 'accounts/perfil.html')
