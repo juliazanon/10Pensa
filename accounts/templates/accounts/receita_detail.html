@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Receita de {{ object.nome }} {% endblock title %}
+{% block content %}
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style="margin: 20px;">Receita de {{ object.nome }}</h1>
+        <p class="card-text"><a href="{% url 'receitas' %}">
+            <button class="btn btn-primary" style="background-color: rgb(241, 133, 60);"> Voltar para as receitas</button></a></p>
+    </div>
+    <!-- Content Row -->
+    <main>
+        <div class="row">
+            
+            <div class="col-xl-8 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h3 class="m-0 font-weight-bold text-primary">Bolo de Cenoura</h3>
+                    </div>
+                <!-- Card Body -->
+                <div class="container">
+                    <div class="col-xl-8 col-lg-7">
+                        <h3>Ingredientes:</h3><br>
+                        <h3>Modo de preparo: </h3>
+                        <p>{{ object.descricao }} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="card" >           
+        <div class="card-body">
+            <a href="{{ object.get_absolute_url_update }}" class="btn btn-primary">Editar Receita </a>
+            <a href="{% url 'receita_delete' object.pk %}" class="btn btn-danger"> Deletar Receita </a>
+          </div>    
+    </div>
+</div>
+{% endblock content %}

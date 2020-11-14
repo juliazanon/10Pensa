@@ -1,24 +1,24 @@
 {% extends 'base.html' %}
-{% block title %} Editar produto {% endblock title %}
+{% block title %} Nova Receita {% endblock title %}
 {% block content %}
 <div class="container">
     <div class="card o-hidden border-0 shadow-lg my-5">
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4" style="margin: 20px;">
-            <a class="h3 mb-0 text-gray-800" href="{% url 'perfil' %}">
-                <button class="btn btn-primary btn-user btn-block">Voltar</button></a>
+                <a class="h3 mb-0 text-gray-800" href="{% url 'receitas' %}">
+                    <button class="btn btn-primary btn-user btn-block">Voltar</button></a>
             </div>
             <div class="row">
                 <div class="col-lg-7 d-none d-lg-block">
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Editar produto</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Nova Receita</h1>
                             </div>
                             <form action="" method="post">{% csrf_token %}
                                 {{form.as_p}}
-                                <input href="{% url 'perfil' %}" type="submit" value="Salvar" class="btn btn-primary btn-user btn-block"  role="button">
+                                <input href="{% url 'receitas' %}" type="submit" value="Salvar" class="btn btn-primary btn-user btn-block"  role="button">
                             </form>
                         </div>
                     </div>

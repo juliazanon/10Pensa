@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %} Receitas {% endblock title %}
+{% block content %}
+<div class="container-fluid">
+
+     <!-- Page Heading -->
+     <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style="margin: 20px;">Aqui estão as suas receitas</h1>
+        <p class="card-text"><a href="{% url 'perfil' %}">
+            <button class="btn btn-primary" style="background-color: rgb(241, 133, 60);"> Retornar para a despensa</button></a></p>
+    </div>
+
+    <!-- Content Row -->
+    <main>
+        <div class="row">
+
+            <div class="col-xl-8 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h3 class="m-0 font-weight-bold text-primary">Lista de receitas</h3>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-item" href="{% url 'receita_new' %}">
+                                <button class="btn btn-primary btn-user btn-block">Adicionar receita</button></a>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="container">
+                        <div class="row ">
+                            {% for receita in object_list %}
+                                <div class="col-md-6 infinite-item">
+                                    <div class="card mb-4 shadow-sm">
+                                        <img class="img-thumbnail"  src="{{post.image.url}}"/>
+                                        <div class="card-body">
+                                            <a href="{{ receita.get_absolute_url }}">
+                                            <h3 style="color: rgb(224, 91, 34);">{{ receita.nome }}</h3>
+                                            </a>
+                                            <p class="card-text"><a href="{{ receita.get_absolute_url_update }}">
+                                                <button class="btn btn-primary">Editar receita</button></a>
+                                                <a href="{% url 'receita_delete' receita.pk %}">
+                                                <button class="btn btn-danger">
+                                                    Deletar receita</button></a></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+{% endblock content %}

@@ -29,9 +29,6 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        {% if user.is_authenticated %}
-        <p class="lead" style="color: salmon;">Despensa de {{user.first_name}}</p>
-        {% endif %}
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
@@ -42,7 +39,10 @@
             
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'perfil' %}">Perfil</a>
+                <a class="nav-link" style="color: salmon;" href="{% url 'perfil' %}">Despensa de {{user.first_name}}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" style="color: salmon;" href="{% url 'receitas' %}">Receitas</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'logout' %}">logout</a>

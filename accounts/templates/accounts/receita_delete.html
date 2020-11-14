@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %} Deletar Receita {% endblock title %}
+{% block content %}
+<h1>Deletar Receita</h1>
+<form action="" method="post">{% csrf_token %}
+    <p>Você tem certeza que deseja excluir a receitas de "{{ produto.nome }}" ?</p>
+    <input type="submit" value="Confirmar" class="btn btn-danger">
+</form>
+{% endblock content %}

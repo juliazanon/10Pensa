@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %} Home {% endblock title %}
+{% block title %} Despensa {% endblock title %}
 {% block content %}
 
     <!-- <p class="mt-4">
@@ -14,61 +14,66 @@
 
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800" style="margin: 15px;">Essa é a sua despensa!</h1>
+        <h1 class="h3 mb-0 text-gray-800" style="margin: 20px;">Essa é a sua despensa!</h1>
+        <p class="card-text"><a href="{% url 'receitas' %}">
+            <button class="btn btn-primary" style="background-color: rgb(241, 133, 60);"> Acesse suas receitas!</button></a></p>
     </div>
 
     <!-- Content Row -->
-
-    <div class="row">
-
-        <!-- Area Chart -->
-        <div class="col-xl-8 col-lg-7">
-            <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div
-                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h3 class="m-0 font-weight-bold text-primary">Lista de produtos</h3>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-item" href="{% url 'produto_new' %}">
-                            <button class="btn btn-primary btn-user btn-block">Adicionar produto</button></a>
-                        <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                            aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header">Dropdown Header:</div>
-                            <a class="dropdown-item" href="{% url 'produto_new' %}">Adicionar produto</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" style="color:red" href="#">Limpar lista</a>
-                        </div> -->
+    <main>
+        <div class="row">
+            
+            <div class="col-xl-8 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h3 class="m-0 font-weight-bold text-primary">Lista de produtos</h3>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-item" href="{% url 'produto_new' %}">
+                                <button class="btn btn-primary btn-user btn-block">Adicionar produto</button></a>
+                            <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                aria-labelledby="dropdownMenuLink">
+                                <div class="dropdown-header">Dropdown Header:</div>
+                                <a class="dropdown-item" href="{% url 'produto_new' %}">Adicionar produto</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" style="color:red" href="#">Limpar lista</a>
+                            </div> -->
+                        </div>
                     </div>
-                </div>
-                <!-- Card Body -->
-                <div class="container">
-                    <div class="row ">
-                        {% for produto in object_list %}
-                            <div class="col-md-6 infinite-item">
-                                <div class="card mb-4 shadow-sm">
-                                    <img class="img-thumbnail"  src="{{post.image.url}}"/>
-                                    <div class="card-body">
-                                        <h3>{{ produto.nome }}</h3>
-                                        <p class="card-text">{{ produto.quantidade }} unidade(s)</p>
-                                        <p class="card-text">Data de validade: {{ produto.validade }}</p>
-                                        <p class="card-text"><a href="{% url 'produto_edit' produto.pk %}">
-                                            <button class="btn btn-primary btn-user btn-block">Editar produto</button></a></p>
-                                        <p class="card-text"><a href="{% url 'produto_delete' produto.pk %}">
-                                            <button class="btn btn-primary btn-user btn-block" style="background-color: red;">
-                                                Deletar produto</button></a></p>
+                    <!-- Card Body -->
+                    <div class="container">
+                        <div class="row ">
+                            {% for produto in object_list %}
+                                <div class="col-md-6 infinite-item">
+                                    <div class="card mb-4 shadow-sm">
+                                        <img class="img-thumbnail"  src="{{post.image.url}}"/>
+                                        <div class="card-body">
+                                            <h3>{{ produto.nome }}</h3>
+                                            <p class="card-text">{{ produto.quantidade }} unidade(s)</p>
+                                            <p class="card-text">Data de validade: {{ produto.validade }}</p>
+                                            <div>
+                                                <p class="card-text"><a href="{% url 'produto_edit' produto.pk %}">
+                                                    <button class="btn btn-primary">Editar produto</button></a></p>
+                                                    <a href="{% url 'produto_delete' produto.pk %}">
+                                                    <button class="btn btn-danger">
+                                                        Deletar produto</button></a></p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="column"></div>
+    </main>
+    <aside>
         <!-- Expired -->
         <div class="col-xl-4 col-lg-5">
             <div class="card shadow mb-4">
@@ -128,7 +133,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </aside>
 </div>
     
 {% endblock content %}
