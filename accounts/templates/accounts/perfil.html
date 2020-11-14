@@ -9,19 +9,126 @@
 
     <button type="submit" class="btn btn-primary">Alterar Dados</button>
 <a class="btn btn-danger" href="#" data-toggle="modal" data-target="#excluirModal" role="button ">Excluir Usuário</a> -->
+<!-- Begin Page Content -->
+<div class="container-fluid">
 
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style="margin: 15px;">Essa é a sua despensa!</h1>
+    </div>
 
-<a href="{% url 'produto_new' %}">+ Novo Produto</a>
-    {% for produto in object_list %}
-        <div class="post-entry">
-            <div class="nav-left">
-                <h1>{{ produto.nome }}</h1>
-                <p>{{ produto.validade }}</p>
-            </div>
-            <div class="nav-right">
-                <h3><a href="{% url 'produto_edit' produto.pk %}">Editar produto</a></h3>
+    <!-- Content Row -->
+
+    <div class="row">
+
+        <!-- Area Chart -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h3 class="m-0 font-weight-bold text-primary">Lista de produtos</h3>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-item" href="{% url 'produto_new' %}">
+                            <button class="btn btn-primary btn-user btn-block">Adicionar produto</button></a>
+                        <!-- <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item" href="{% url 'produto_new' %}">Adicionar produto</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" style="color:red" href="#">Limpar lista</a>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="container">
+                    <div class="row ">
+                        {% for produto in object_list %}
+                            <div class="col-md-6 infinite-item">
+                                <div class="card mb-4 shadow-sm">
+                                    <img class="img-thumbnail"  src="{{post.image.url}}"/>
+                                    <div class="card-body">
+                                        <h3>{{ produto.nome }}</h3>
+                                        <p class="card-text">{{ produto.quantidade }} unidade(s)</p>
+                                        <p class="card-text">Data de validade: {{ produto.validade }}</p>
+                                        <p class="card-text"><a href="{% url 'produto_edit' produto.pk %}">
+                                            <button class="btn btn-primary btn-user btn-block">Editar produto</button></a></p>
+                                        <p class="card-text"><a href="{% url 'produto_delete' produto.pk %}">
+                                            <button class="btn btn-primary btn-user btn-block" style="background-color: red;">
+                                                Deletar produto</button></a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
-    {% endfor %}
+        <div class="column"></div>
+        <!-- Expired -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="lead" style="color: red; font-weight: bold;">Produtos vencidos</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        {% for produto in object_list %}
+                        {% if produto.is_expired %}
+                            <div class="card mb-4 shadow-sm">
+                                <img class="img-thumbnail"  src="{{post.image.url}}"/>
+                                <div class="card-body">
+                                    <h5>{{ produto.nome }}</h5>
+                                    <p class="card-text">Data de validade: {{ produto.validade }}</p>
+                                    <p class="card-text"><a href="{% url 'produto_delete' produto.pk %}">
+                                        <button class="btn btn-primary btn-user btn-block" style="background-color: red;">
+                                            Deletar produto</button></a></p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- To expire -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="lead" style="color: red; font-weight: bold;">Produtos próximos de vencer</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="chart-pie pt-4 pb-2">
+                        {% for produto in object_list %}
+                        {% if produto.is_close_expire %}
+                            <div class="card mb-4 shadow-sm">
+                                <img class="img-thumbnail"  src="{{post.image.url}}"/>
+                                <div class="card-body">
+                                    <h5>{{ produto.nome }}</h5>
+                                    <p class="card-text">Data de validade: {{ produto.validade }}</p>
+                                    <p class="card-text"><a href="{% url 'produto_delete' produto.pk %}">
+                                        <button class="btn btn-primary btn-user btn-block" style="background-color: red;">
+                                            Deletar produto</button></a></p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     
 {% endblock content %}

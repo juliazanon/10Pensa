@@ -7,3 +7,4 @@ class ProdutoAdmin(admin.ModelAdmin):
     list_filter = ('nome', 'validade')
     date_hierarchy = 'validade'
     search_fields = ('nome',)
+    raw_id_fields = ('usuario',)

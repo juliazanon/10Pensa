@@ -10,5 +10,6 @@ urlpatterns = [
     path('perfil/', views.ProdutoListView.as_view(), name='perfil'),
     path('produto/novo/', views.ProdutoCreateView.as_view(), name='produto_new'),
     path('produto/<int:pk>/edit/', views.ProdutoUpdateView.as_view(), name='produto_edit'),
+    path('produto/<int:pk>/delete/', views.ProdutoDeleteView.as_view(), name='produto_delete'),
     #url(r'^perfil/$', views.view_profile, name='view_profile'),
 ]

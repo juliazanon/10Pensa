@@ -131,12 +131,12 @@
   .navbar-nav {
     .nav-item {
       .nav-link {
-        color: $gray-400;
+        color: $red-400;
         &:hover {
-          color: $gray-500;
+          color: $red-500;
         }
         &:active {
-          color: $gray-600;
+          color: $red-600;
         }
       }
     }

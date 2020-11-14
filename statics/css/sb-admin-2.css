@@ -9709,6 +9709,9 @@ a.text-dark:hover, a.text-dark:focus {
   }
   .container {
     min-width: 992px !important;
+    max-height:250px;
+    overflow:auto;
+  }
   }
   .navbar {
     display: none;
