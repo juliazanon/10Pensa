@@ -10829,19 +10829,19 @@ a:focus {
 .bg-login-image {
   background: url("logo.png");
   background-position: center;
-  background-size: cover;
+  background-size: 50% 50%;
 }
 
 .bg-register-image {
   background: url("logo.png");
   background-position: center;
-  background-size: cover;
+  background-size: 50% 50%;
 }
 
 .bg-password-image {
   background: url("logo.png");
   background-position: center;
-  background-size: cover;
+  background-size: 50% 50%;
 }
 
 .bg-logo-image {
