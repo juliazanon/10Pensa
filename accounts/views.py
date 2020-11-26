@@ -110,7 +110,7 @@ class ReceitaCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     form_class = AdicionarReceitasForm
     template_name = 'accounts/receita_new.html'
     success_message = "Receita de %(field)s criada com sucesso"
-    success_url = reverse_lazy('perfil')
+    success_url = reverse_lazy('receitas')
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -146,7 +146,7 @@ class ReceitaUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
 class ReceitaDeleteView(LoginRequiredMixin,SuccessMessageMixin,DeleteView):
     model = Receita
     template_name = 'accounts/receita_delete.html'
-    success_url = reverse_lazy('perfil')
+    success_url = reverse_lazy('receitas')
     success_message = "Receita Deletada com sucesso"
 
     def delete(self, request, *args, **kwargs):

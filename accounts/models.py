@@ -8,19 +8,19 @@ import datetime as DT
 
 class Produto(models.Model):
     id = models.AutoField(primary_key=True)
-    nome = models.CharField(max_length=250)
+    nome = models.CharField(max_length=200)
     quantidade = models.IntegerField()
     validade = models.DateField()
 
     CHOICES = (
-        ('Un', 'Unidades'),
-        ('Pc', 'Pacotes'),
-        ('Lt', 'Latas'),
-        ('Cx', 'Caixas'),
+        ('Unidade', 'Unidade'),
+        ('Pacote', 'Pacote'),
+        ('Lata', 'Lata'),
+        ('Caixa', 'Caixa'),
         ('Kg', 'Kg')
     )
 
-    tipo = models.CharField(max_length=10, choices = CHOICES, default='Un')
+    tipo = models.CharField(max_length=10, choices = CHOICES, default='Unidade')
 
     usuario = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.CASCADE)
