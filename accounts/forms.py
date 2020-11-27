@@ -70,7 +70,7 @@ class AdicionarProdutosForm(forms.ModelForm):
 class AdicionarReceitasForm(forms.ModelForm):
     class Meta:
         model = Receita
-        fields = ['nome', 'descricao',]
+        fields = ['nome','descricao',]
 
         widgets = {
             'nome': forms.TextInput(attrs={
@@ -84,4 +84,26 @@ class AdicionarReceitasForm(forms.ModelForm):
                                         'name': 'texto',
                                         'rows': '15',
                                         'placeholder': 'Modo de preparo'}),
+        }
+
+class AdicionarIngredientesForm(forms.ModelForm):
+    class Meta:
+        model = Ingrediente
+        fields = ['nome', 'quantidade', 'tipo']
+
+        widgets = {
+            'nome': forms.TextInput(attrs={
+                                        'class': 'form-control',
+                                        'id': 'nome',
+                                        'name': 'nome',
+                                        'placeholder': 'Nome do produto'}),
+            'quantidade': forms.NumberInput(attrs={
+                                        'class': 'form-control',
+                                        'id': 'quantidade',
+                                        'name': 'quantidade',
+                                        'step': 1}),
+            'tipo': forms.Select(attrs={
+                                        'class': 'form-control', 
+                                        'id': 'grupo', 
+                                        'name': 'grupo'}),
         }

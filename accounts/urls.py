@@ -19,5 +19,6 @@ urlpatterns = [
     path('perfil/receitas/nova', views.ReceitaCreateView.as_view(), name='receita_new'),
     path('perfil/receita/<int:pk>/edit', views.ReceitaUpdateView.as_view(), name='receita_edit'),
     path('perfil/receita/<int:pk>/delete/', views.ReceitaDeleteView.as_view(), name='receita_delete'),
-    #url(r'^perfil/$', views.view_profile, name='view_profile'),
+    #ingredientes
+    path('perfil/receita/ingrediente', views.IngredienteCreateView.as_view(), name='ingrediente_new'),
 ]

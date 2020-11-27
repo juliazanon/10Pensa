@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
 from django.views.generic.base import RedirectView
-from .models import Produto, Receita
+from .models import Produto, Receita, Ingrediente
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -152,3 +152,22 @@ class ReceitaDeleteView(LoginRequiredMixin,SuccessMessageMixin,DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request,self.success_message)
         return super(ReceitaDeleteView,self).delete(request, *args, **kwargs)
+
+class IngredienteCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+    model = Ingrediente
+    form_class = AdicionarIngredientesForm
+    template_name = 'accounts/ingrediente_new.html'
+    success_message = "%(field)s - criado com sucesso"
+    success_url = reverse_lazy('perfil')
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.usuario = self.request.user
+        obj.save()
+        return super().form_valid(form)
+
+    def get_success_message(self, cleaned_data):
+        return self.success_message % dict(
+            cleaned_data,
+            field=self.object.nome,
+        )
