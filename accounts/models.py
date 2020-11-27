@@ -44,30 +44,10 @@ class Produto(models.Model):
     def __str__(self):
         return self.nome
 
-class Ingrediente(models.Model):
-    id = models.AutoField(primary_key=True)
-    nome = models.CharField(max_length=250)
-    quantidade = models.IntegerField()
-
-    CHOICES = (
-        ('Unidade', 'Unidade'),
-        ('Pacote', 'Pacote'),
-        ('Lata', 'Lata'),
-        ('Caixa', 'Caixa'),
-        ('Kg', 'Kg')
-    )
-
-    tipo = models.CharField(max_length=10, choices = CHOICES, default='Unidade')
-
-    def __str__(self):
-        return self.nome
-
 class Receita(models.Model):
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=250)
     descricao = models.TextField(verbose_name="Modo de Preparo")
-
-    ingredientes = models.ManyToManyField(Ingrediente)
 
     usuario = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.CASCADE)
@@ -83,6 +63,25 @@ class Receita(models.Model):
     def __str__(self):
         return self.nome
 
+class Ingrediente(models.Model):
+    id = models.AutoField(primary_key=True)
+    nome = models.CharField(max_length=250)
+    quantidade = models.IntegerField()
 
+    receita = models.ForeignKey(
+        Receita, null=True, blank=True, on_delete=models.CASCADE)
+
+    CHOICES = (
+        ('Unidade', 'Unidade'),
+        ('Pacote', 'Pacote'),
+        ('Lata', 'Lata'),
+        ('Caixa', 'Caixa'),
+        ('Kg', 'Kg')
+    )
+
+    tipo = models.CharField(max_length=10, choices = CHOICES, default='Unidade')
+
+    def __str__(self):
+        return self.nome
 
 
