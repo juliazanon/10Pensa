@@ -1,6 +1,10 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.forms.models import inlineformset_factory, BaseInlineFormSet
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, Fieldset, Div, HTML, ButtonHolder, Submit
+from .custom_layout_object import *
 from django.forms import ModelForm
 from .models import *
 from datetime import date
@@ -86,10 +90,29 @@ class AdicionarReceitasForm(forms.ModelForm):
                                         'placeholder': 'Modo de preparo'}),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(AdicionarReceitasForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_tag = True
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-md-3 create-label'
+        self.helper.field_class = 'col-md-9'
+        self.helper.layout = Layout(
+            Div(
+                Field('nome'),
+                Field('owner'),
+                Fieldset('Adicionar ingredientes',
+                    Formset('ingrediente')),
+                Field('descricao'),
+                HTML("<br>"),
+                ButtonHolder(Submit('submit', 'save')),
+                )
+            )
+
 class AdicionarIngredientesForm(forms.ModelForm):
     class Meta:
-        model = Ingrediente
-        fields = ['nome', 'quantidade', 'tipo']
+        model = Ingrediente 
+        fields = ['nome', 'quantidade', 'tipo',]
 
         widgets = {
             'nome': forms.TextInput(attrs={
@@ -102,8 +125,13 @@ class AdicionarIngredientesForm(forms.ModelForm):
                                         'id': 'quantidade',
                                         'name': 'quantidade',
                                         'step': 1}),
-            'tipo': forms.Select(attrs={
+            'tipo': forms.TextInput(attrs={
                                         'class': 'form-control', 
                                         'id': 'grupo', 
-                                        'name': 'grupo'}),
+                                        'name': 'grupo',
+                                        'placeholder': 'xícara, colher, mg...'}),
         }
+
+IngredienteFormSet = inlineformset_factory(
+    Receita, Ingrediente, form = AdicionarIngredientesForm, extra = 1, can_delete = True)
+

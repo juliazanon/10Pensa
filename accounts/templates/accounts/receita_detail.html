@@ -20,7 +20,7 @@
                     <!-- Card Header - Dropdown -->
                     <div
                         class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h3 class="m-0 font-weight-bold text-primary">Bolo de Cenoura</h3>
+                        <h3 class="m-0 font-weight-bold text-primary">{{object.nome}}</h3>
                     </div>
                 <!-- Card Body -->
                 <div class="container">
@@ -28,10 +28,10 @@
                         <h3>Ingredientes:</h3><br>
 
                         {% for ingrediente in object.ingrediente_set.all %}
-                        <p>{{ ingrediente.nome }}</p>
+                        <p>{{ ingrediente.quantidade }} {{ ingrediente.tipo }} de {{ ingrediente.nome }}</p>
+                        {% endfor %}
                         <h3>Modo de preparo: </h3>
                         <p>{{ object.descricao }} </p>
-                        {% endfor %}
 
                     </div>
                 </div>

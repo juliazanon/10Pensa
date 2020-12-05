@@ -48,6 +48,7 @@ class Receita(models.Model):
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=250)
     descricao = models.TextField(verbose_name="Modo de Preparo")
+    is_active = models.BooleanField(default=True)
 
     usuario = models.ForeignKey(
         User, null=True, blank=True, on_delete=models.CASCADE)
@@ -66,20 +67,13 @@ class Receita(models.Model):
 class Ingrediente(models.Model):
     id = models.AutoField(primary_key=True)
     nome = models.CharField(max_length=250)
-    quantidade = models.IntegerField()
+    quantidade = models.FloatField()
+    is_active = models.BooleanField(default=True)
 
     receita = models.ForeignKey(
         Receita, null=True, blank=True, on_delete=models.CASCADE)
 
-    CHOICES = (
-        ('Unidade', 'Unidade'),
-        ('Pacote', 'Pacote'),
-        ('Lata', 'Lata'),
-        ('Caixa', 'Caixa'),
-        ('Kg', 'Kg')
-    )
-
-    tipo = models.CharField(max_length=10, choices = CHOICES, default='Unidade')
+    tipo = models.CharField(max_length=30)
 
     def __str__(self):
         return self.nome
