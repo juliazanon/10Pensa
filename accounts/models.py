@@ -55,6 +55,24 @@ class Receita(models.Model):
 
     objects = models.Manager()
 
+    def is_valid(self):
+        produtos = Produto.objects.all()
+        ings_receita = Ingrediente.objects.filter(receita=self)
+        valid = True
+        for ing in ings_receita:
+            ing_ok = False
+            exist = False
+            for prod in produtos:
+                if ing.nome.lower() == prod.nome.lower():
+                    exist = True
+                if exist == True:
+                    if not(prod.is_expired):
+                        ing_ok = True
+            if ing_ok == False:
+                valid = False
+        
+        return valid
+
     def get_absolute_url(self):
         return reverse('receita_detail', args=[self.pk])
 
