@@ -44,6 +44,31 @@ class UserCreationFormWithEmail(UserCreationForm):
                 raise forms.ValidationError("Este e-mail já está cadastrado.")
             return email
 
+class UserChangeForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ("username", "email", "first_name", "last_name")
+
+        widgets = {
+            'username': forms.TextInput(attrs={
+                'class': 'form-control form-control-user',
+                                        'id': 'username',
+                                        'name': 'username',
+                                        'placeholder': 'Nome de usuário'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
+                                                 'id': 'nome',
+                                                 'name': 'nome',
+                                                 'placeholder': 'Primeiro nome'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
+                                                 'id': 'nome',
+                                                 'name': 'nome',
+                                                 'placeholder': 'Sobrenome'}),
+                'email': forms.EmailInput(attrs={'class': 'form-control form-control-user',
+                                                 'id': 'email',
+                                                 'name': 'email',
+                                                 'placeholder': 'Endereço de e-mail'}),
+        }
+
 class AdicionarProdutosForm(forms.ModelForm):
     class Meta:
         model = Produto
@@ -100,12 +125,11 @@ class AdicionarReceitasForm(forms.ModelForm):
         self.helper.layout = Layout(
             Div(
                 Field('nome'),
-                Field('owner'),
                 Fieldset('Adicionar ingredientes',
                     Formset('ingrediente')),
                 Field('descricao'),
                 HTML("<br>"),
-                ButtonHolder(Submit('submit', 'save')),
+                ButtonHolder(Submit('submit', 'Salvar')),
                 )
             )
 

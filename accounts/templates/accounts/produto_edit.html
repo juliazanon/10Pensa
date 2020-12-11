@@ -6,7 +6,7 @@
         <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="d-sm-flex align-items-center justify-content-between mb-4" style="margin: 20px;">
-            <a class="h3 mb-0 text-gray-800" href="{% url 'perfil' %}">
+            <a class="h3 mb-0 text-gray-800" href="{% url 'despensa' %}">
                 <button class="btn btn-primary btn-user btn-block">Voltar</button></a>
             </div>
             <div class="row">
@@ -18,7 +18,7 @@
                             </div>
                             <form action="" method="post">{% csrf_token %}
                                 {{form.as_p}}
-                                <input href="{% url 'perfil' %}" type="submit" value="Salvar" class="btn btn-primary btn-user btn-block"  role="button">
+                                <input href="{% url 'despensa' %}" type="submit" value="Salvar" class="btn btn-primary btn-user btn-block"  role="button">
                             </form>
                         </div>
                     </div>

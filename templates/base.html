@@ -39,17 +39,20 @@
             
             {% if user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" style="color: salmon;" href="{% url 'perfil' %}">Despensa de {{user.first_name}}</a>
+                <a class="nav-link" style="color: salmon;" href="{% url 'despensa' %}">Despensa de {{user.first_name}}</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" style="color: salmon;" href="{% url 'receitas' %}">Receitas</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'logout' %}">logout</a>
+                <a class="nav-link" href="{% url 'perfil' %}">Seu perfil</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
             </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'login' %}">login</a>
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'signup' %}">Cadasre-se</a>
@@ -62,7 +65,6 @@
         </div>
         </div>
     </nav>
-        <!-- <a href="{% url 'produto_new' %}">+ Novo Produto</a> -->
 
     <div class="container">
         {% block content %} {% endblock content %}

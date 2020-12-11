@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %} Despensa {% endblock title %}
+{% block content %}
+
+
+<!-- Begin Page Content -->
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800" style="margin: 20px;">Essa é a sua despensa!</h1>
+        <p class="card-text"><a href="{% url 'receitas' %}">
+            <button class="btn btn-primary" style="background-color: rgb(241, 133, 60); margin-top: 30px"> Acesse suas receitas!</button></a></p>
+    </div>
+
+    <!-- Content Row -->
+    <div class="main">
+        <div class="row">
+            <div class="col-xl-6 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h3 class="m-0 font-weight-bold text-primary">Lista de produtos</h3>
+                        <div class="dropdown no-arrow">
+                            <a class="dropdown-item" href="{% url 'produto_new' %}">
+                                <button class="btn btn-primary btn-user btn-block">Adicionar produto</button></a>
+                        </div>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="container" style=" height: 600px; overflow-y: scroll;">
+                        <div class="row ">
+                            {% for produto in object_list %}
+                                <div class="col-md-6 infinite-item">
+                                    <div class="card mb-4 shadow-sm">
+                                        <img class="img-thumbnail"  src="{{post.image.url}}"/>
+                                        <div class="card-body">
+                                            <h3>{{ produto.nome }}</h3>
+                                            <p class="card-text">{{ produto.quantidade }} {{ produto.get_tipo_display }}(s)</p>
+                                            <p class="card-text">Data de validade: {{ produto.validade }}</p>
+                                            <div>
+                                                <p class="card-text"><a href="{% url 'produto_edit' produto.pk %}">
+                                                    <button class="btn btn-primary">Editar produto</button></a></p>
+                                                    <a href="{% url 'produto_delete' produto.pk %}">
+                                                    <button class="btn btn-danger">
+                                                        Deletar produto</button></a></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- To expire -->
+            <div class="col-xl-3 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="lead" style="color: red; font-weight: bold;">Produtos próximos de vencer</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body" style=" height: 400px; overflow-y: scroll;">
+                        {% for produto in object_list %}
+                        {% if produto.is_close_expire %}
+                            <div class="card mb-4 shadow-sm">
+                                <img class="img-thumbnail"  src="{{post.image.url}}"/>
+                                <div class="card-body">
+                                    <h5>{{ produto.nome }}</h5>
+                                    <p class="card-text">Data de validade: {{ produto.validade }}</p>
+                                    <p class="card-text"><a href="{% url 'produto_delete' produto.pk %}">
+                                        <button class="btn btn-primary btn-user btn-block" style="background-color: red;">
+                                            Deletar produto</button></a></p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endfor %}   
+                    </div>
+                </div>
+            </div>
+            <!-- Expired -->
+            <div class="col-xl-3 col-lg-7">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div
+                        class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6 class="lead" style="color: red; font-weight: bold;">Produtos vencidos</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body" style=" height: 400px; overflow-y: scroll;">
+                        {% for produto in object_list %}
+                        {% if produto.is_expired %}
+                            <div class="card mb-4 shadow-sm">
+                                <img class="img-thumbnail"  src="{{post.image.url}}"/>
+                                <div class="card-body">
+                                    <h5>{{ produto.nome }}</h5>
+                                    <p class="card-text">Data de validade: {{ produto.validade }}</p>
+                                    <p class="card-text"><a href="{% url 'produto_delete' produto.pk %}">
+                                    <button class="btn btn-primary btn-user btn-block" style="background-color: red;">
+                                        Deletar produto</button></a></p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endfor %}    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+{% endblock content %}

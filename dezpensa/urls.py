@@ -24,7 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('accounts.urls')),
-    #path('perfil/', acc_views.perfil, name='perfil'),
     path('', include('pagina_inicial.urls')),
 ]
 

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models.signals import post_save
 from datetime import date
+from unidecode import unidecode
 import datetime as DT
 
 class Produto(models.Model):
@@ -63,11 +64,10 @@ class Receita(models.Model):
             ing_ok = False
             exist = False
             for prod in produtos:
-                if ing.nome.lower() == prod.nome.lower():
+                if unidecode(ing.nome.lower()) == unidecode(prod.nome.lower()):
                     exist = True
-                if exist == True:
-                    if not(prod.is_expired):
-                        ing_ok = True
+                if exist == True and not(prod.is_expired):
+                    ing_ok = True
             if ing_ok == False:
                 valid = False
         

@@ -18,18 +18,62 @@ from django.urls import reverse
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.mail import send_mail
 
 from .forms import *
 
-class SignUpView(generic.CreateView):
+class SignUpView(CreateView):
     form_class = UserCreationFormWithEmail
     success_url = reverse_lazy('login')
     template_name = 'accounts/signup.html'
 
-class UserEditView(generic.UpdateView):
+class UserEditView(UpdateView):
     form_class = UserChangeForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('perfil')
     template_name = 'accounts/perfil_edit.html'
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.usuario = self.request.user
+        obj.save()
+        return super().form_valid(form)
+
+class UserDeleteView(LoginRequiredMixin,SuccessMessageMixin,DeleteView):
+    model = User
+    template_name = 'accounts/excluir_usuario.html'
+    success_url = reverse_lazy('perfil')
+    success_message = "Usuário deletado com sucesso"
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request,self.success_message)
+        return super(UserDeleteView,self).delete(request, *args, **kwargs)
+
+def forgot_password(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        query = User.objects.filter(username=username)
+        if query.exists():
+            user = query[0]
+            newpassword = User.objects.make_random_password(10)
+            user.set_password(newpassword)
+            user.save()
+            message_name = 'Recuperação de Senha 10Pensa'
+            message = 'A sua nova senha é: ' + \
+                newpassword + 'Não se esqueça de mudá-la!'
+            message_email = '10pensapoliusp@gmail.com'
+            recipient = user.email
+
+            send_mail(
+                message_name,
+                message,
+                message_email,
+                [recipient],
+            )
+        return redirect('login')
+
+    else:
+        return render(request, 'accounts/forgot-password.html', {})
+
 
 @login_required
 def perfil(request):
@@ -40,7 +84,7 @@ def perfil(request):
 
 class ProdutoListView(ListView):
     model = Produto
-    template_name = 'accounts/perfil.html'
+    template_name = 'accounts/despensa.html'
 
     def get_queryset(self):
         return Produto.objects.filter(usuario=self.request.user)
@@ -50,7 +94,7 @@ class ProdutoCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
     form_class = AdicionarProdutosForm
     template_name = 'accounts/produto_new.html'
     success_message = "%(field)s - criado com sucesso"
-    success_url = reverse_lazy('perfil')
+    success_url = reverse_lazy('despensa')
 
     def form_valid(self, form):
         obj = form.save(commit=False)
@@ -68,7 +112,7 @@ class ProdutoUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
     model = Produto
     template_name = 'accounts/produto_edit.html'
     form_class = AdicionarProdutosForm
-    success_url = reverse_lazy('perfil')
+    success_url = reverse_lazy('despensa')
     success_message = "%(field)s - criado com sucesso"
 
     def form_valid(self, form):
@@ -86,7 +130,7 @@ class ProdutoUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
 class ProdutoDeleteView(LoginRequiredMixin,SuccessMessageMixin,DeleteView):
     model = Produto
     template_name = 'accounts/produto_delete.html'
-    success_url = reverse_lazy('perfil')
+    success_url = reverse_lazy('despensa')
     success_message = "Produto deletado com sucesso"
 
     def delete(self, request, *args, **kwargs):
@@ -152,7 +196,7 @@ class ReceitaUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
             context['ingrediente'] = IngredienteFormSet(
                 self.request.POST, instance=self.object)
         else:
-            context['ingrediente'] = IngredienteFormSet()
+            context['ingrediente'] = IngredienteFormSet(instance=self.object)
         return context
 
     def form_valid(self, form):
