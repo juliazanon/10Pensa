@@ -188,7 +188,7 @@ class ReceitaUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
     template_name = 'accounts/receita_edit.html'
     form_class = AdicionarReceitasForm
     success_url = reverse_lazy('receitas')
-    success_message = "Receita de %(field)s - criada com sucesso"
+    success_message = "Receita de %(field)s - editada com sucesso"
 
     def get_context_data(self, **kwargs):
         context = super(ReceitaUpdateView, self).get_context_data(**kwargs)

@@ -61,7 +61,7 @@
                         <h6 class="lead" style="color: red; font-weight: bold;">Produtos próximos de vencer</h6>
                     </div>
                     <!-- Card Body -->
-                    <div class="card-body" style=" height: 400px; overflow-y: scroll;">
+                    <div class="card-body" style=" height: 600px; overflow-y: scroll;">
                         {% for produto in object_list %}
                         {% if produto.is_close_expire %}
                             <div class="card mb-4 shadow-sm">
@@ -88,7 +88,7 @@
                         <h6 class="lead" style="color: red; font-weight: bold;">Produtos vencidos</h6>
                     </div>
                     <!-- Card Body -->
-                    <div class="card-body" style=" height: 400px; overflow-y: scroll;">
+                    <div class="card-body" style=" height: 600px; overflow-y: scroll;">
                         {% for produto in object_list %}
                         {% if produto.is_expired %}
                             <div class="card mb-4 shadow-sm">

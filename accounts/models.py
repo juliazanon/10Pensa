@@ -57,21 +57,7 @@ class Receita(models.Model):
     objects = models.Manager()
 
     def is_valid(self):
-        produtos = Produto.objects.all()
-        ings_receita = Ingrediente.objects.filter(receita=self)
-        valid = True
-        for ing in ings_receita:
-            ing_ok = False
-            exist = False
-            for prod in produtos:
-                if unidecode(ing.nome.lower()) == unidecode(prod.nome.lower()):
-                    exist = True
-                if exist == True and not(prod.is_expired):
-                    ing_ok = True
-            if ing_ok == False:
-                valid = False
-        
-        return valid
+        return all(ing.is_valid() for ing in self.ingrediente_set.all()) # Retorna true se todos os ingredientes forem válidos
 
     def get_absolute_url(self):
         return reverse('receita_detail', args=[self.pk])
@@ -93,7 +79,11 @@ class Ingrediente(models.Model):
 
     tipo = models.CharField(max_length=30)
 
+    def is_valid(self):
+        ing_prods = Produto.objects.filter(nome__iexact=self.nome) # Filtra os produtos com o mesmo nome
+        if not ing_prods: return False # Não há produtos com o mesmo nome na despensa
+        return any(not prod.is_expired for prod in ing_prods) # Se há combinação de nome, checa se está vencido
+
     def __str__(self):
         return self.nome
-
 
