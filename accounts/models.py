@@ -8,7 +8,7 @@ import datetime as DT
 
 class Produto(models.Model):
     id = models.AutoField(primary_key=True)
-    nome = models.CharField(max_length=200)
+    nome = models.CharField(max_length=30)
     quantidade = models.IntegerField()
     validade = models.DateField()
 
@@ -46,7 +46,7 @@ class Produto(models.Model):
 
 class Receita(models.Model):
     id = models.AutoField(primary_key=True)
-    nome = models.CharField(max_length=250)
+    nome = models.CharField(max_length=30)
     descricao = models.TextField(verbose_name="Modo de Preparo")
     is_active = models.BooleanField(default=True)
 
@@ -69,7 +69,7 @@ class Receita(models.Model):
 
 class Ingrediente(models.Model):
     id = models.AutoField(primary_key=True)
-    nome = models.CharField(max_length=250)
+    nome = models.CharField(max_length=30)
     quantidade = models.FloatField()
     is_active = models.BooleanField(default=True)
 

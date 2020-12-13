@@ -11,31 +11,24 @@ from datetime import date
 
 class UserCreationFormWithEmail(UserCreationForm):
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput(
-        attrs={'class': 'form-control form-control-user', 'type': 'password', 'id': 'senha', 'name': 'senha', 'placeholder': 'Senha'}))
+        attrs={'class': 'form-control form-control-user', 
+        'type': 'password', 'placeholder': 'Senha'}))
     password2 = forms.CharField(label="Confirm password", widget=forms.PasswordInput(
-        attrs={'class': 'form-control form-control-user', 'type': 'password', 'id': 'repetirsenha', 'name': 'repetirsenha', 'placeholder': 'Repita sua senha'}))
+        attrs={'class': 'form-control form-control-user', 
+        'type': 'password', 'placeholder': 'Repita sua senha'}))
 
     class Meta:
         model = User
         fields = ("username", "email", "first_name", "last_name", "password1", "password2")
 
         widgets = {
-            'username': forms.TextInput(attrs={
-                'class': 'form-control form-control-user',
-                                        'id': 'username',
-                                        'name': 'username',
-                                        'placeholder': 'Nome de usuário'}),
+            'username': forms.TextInput(attrs={'class': 'form-control form-control-user',
+                                                 'placeholder': 'Nome de usuário'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
-                                                 'id': 'nome',
-                                                 'name': 'nome',
                                                  'placeholder': 'Primeiro nome'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
-                                                 'id': 'nome',
-                                                 'name': 'nome',
                                                  'placeholder': 'Sobrenome'}),
                 'email': forms.EmailInput(attrs={'class': 'form-control form-control-user',
-                                                 'id': 'email',
-                                                 'name': 'email',
                                                  'placeholder': 'Endereço de e-mail'}),
         }
     def clean_email(self):
@@ -50,22 +43,13 @@ class UserChangeForm(forms.ModelForm):
         fields = ("username", "email", "first_name", "last_name")
 
         widgets = {
-            'username': forms.TextInput(attrs={
-                'class': 'form-control form-control-user',
-                                        'id': 'username',
-                                        'name': 'username',
-                                        'placeholder': 'Nome de usuário'}),
+            'username': forms.TextInput(attrs={'class': 'form-control form-control-user',
+                                                 'placeholder': 'Nome de usuário'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
-                                                 'id': 'nome',
-                                                 'name': 'nome',
                                                  'placeholder': 'Primeiro nome'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
-                                                 'id': 'nome',
-                                                 'name': 'nome',
                                                  'placeholder': 'Sobrenome'}),
                 'email': forms.EmailInput(attrs={'class': 'form-control form-control-user',
-                                                 'id': 'email',
-                                                 'name': 'email',
                                                  'placeholder': 'Endereço de e-mail'}),
         }
 
@@ -77,23 +61,15 @@ class AdicionarProdutosForm(forms.ModelForm):
         widgets = {
             'nome': forms.TextInput(attrs={
                                         'class': 'form-control',
-                                        'id': 'nome',
-                                        'name': 'nome',
                                         'placeholder': 'Nome do produto'}),
             'quantidade': forms.NumberInput(attrs={
                                         'class': 'form-control',
-                                        'id': 'quantidade',
-                                        'name': 'quantidade',
                                         'step': 1}),
             'tipo': forms.Select(attrs={
-                                        'class': 'form-control', 
-                                        'id': 'grupo', 
-                                        'name': 'grupo'}),
+                                        'class': 'form-control'}),
             'validade': forms.DateInput(attrs={
                                         'class': 'form-control',
-                                        'type': 'date',
-                                        'id': 'data',
-                                        'name': 'data',}),
+                                        'type': 'date'}),
         }
 
 class AdicionarReceitasForm(forms.ModelForm):
@@ -104,13 +80,9 @@ class AdicionarReceitasForm(forms.ModelForm):
         widgets = {
             'nome': forms.TextInput(attrs={
                                         'class': 'form-control',
-                                        'id': 'nome',
-                                        'name': 'nome',
                                         'placeholder': 'Nome da receita'}),
             'descricao': forms.Textarea(attrs={
                                         'class': 'form-control',
-                                        'id': 'texto',
-                                        'name': 'texto',
                                         'rows': '15',
                                         'placeholder': 'Modo de preparo'}),
         }
@@ -141,18 +113,12 @@ class AdicionarIngredientesForm(forms.ModelForm):
         widgets = {
             'nome': forms.TextInput(attrs={
                                         'class': 'form-control',
-                                        'id': 'nome',
-                                        'name': 'nome',
                                         'placeholder': 'Nome do produto'}),
             'quantidade': forms.NumberInput(attrs={
                                         'class': 'form-control',
-                                        'id': 'quantidade',
-                                        'name': 'quantidade',
-                                        'step': 1}),
+                                        'step': 0.5}),
             'tipo': forms.TextInput(attrs={
                                         'class': 'form-control', 
-                                        'id': 'grupo', 
-                                        'name': 'grupo',
                                         'placeholder': 'xícara, colher, mg...'}),
         }
 
