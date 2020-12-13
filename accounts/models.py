@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.db.models.signals import post_save
 from datetime import date
-from unidecode import unidecode
 import datetime as DT
 
 class Produto(models.Model):
