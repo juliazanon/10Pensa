@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+
 <div class="container">
 
   <div class="card o-hidden border-0 shadow-lg my-5">
@@ -14,7 +15,7 @@
                           <h1 class="h4 text-gray-900 mb-4">Crie uma conta!</h1>
                       </div>
                       <form class="user" method="POST">
-                        {% csrf_token %}
+                          {% csrf_token %}
                           <div class="form-group row">
                               <div class="col-sm-6 mb-3 mb-sm-0">
 
@@ -74,13 +75,4 @@
   </div>
 </div>
 
-<!-- Bootstrap core JavaScript-->
-<script src="vendor/jquery/jquery.min.js"></script>
-<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-<!-- Core plugin JavaScript-->
-<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-<!-- Custom scripts for all pages-->
-<script src="js/sb-admin-2.min.js"></script>
 {% endblock %}

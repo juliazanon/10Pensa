@@ -14,12 +14,15 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:40">
 
-    <!-- Bootstrap core CSS -->
+    <!-- Bootstrap core CSS Bare -->
     <link href={% static 'vendor/bootstrap/css/bootstrap.min.css' %} rel="stylesheet">
+
+    <!-- Custom styles for this SB Admin 2-->
+    <link href={% static 'css/sb-admin-2.min.css' %} rel="stylesheet">
+
     <title>{% block title %} {% endblock title %}</title>
     
-    <!-- Custom styles for this template-->
-    <link href={% static 'css/sb-admin-2.min.css' %} rel="stylesheet">
+
 </head>
 <body>
     <!-- Navigation -->
@@ -69,6 +72,16 @@
     <div class="container">
         {% block content %} {% endblock content %}
     </div>
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; 10Pensa 2020</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
 
     <!-- Bootstrap core JavaScript -->
     <script src="vendor/jquery/jquery.slim.min.js"></script>

@@ -1,8 +1,10 @@
 from django.contrib import admin
 from .models import Produto, Receita, Ingrediente
 
+
 class IngredienteInline(admin.TabularInline):
     model = Ingrediente
+
 
 @admin.register(Produto)
 class ProdutoAdmin(admin.ModelAdmin):
@@ -12,13 +14,15 @@ class ProdutoAdmin(admin.ModelAdmin):
     search_fields = ('nome',)
     raw_id_fields = ('usuario',)
 
+
 @admin.register(Receita)
 class ReceitaAdmin(admin.ModelAdmin):
-    inlines = [IngredienteInline,]
+    inlines = [IngredienteInline, ]
     list_display = ('nome', 'descricao')
     list_filter = ('nome',)
     search_fields = ('nome',)
     raw_id_fields = ('usuario',)
+
 
 @admin.register(Ingrediente)
 class IngredienteAdmin(admin.ModelAdmin):

@@ -1,21 +1,26 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.forms.models import inlineformset_factory, BaseInlineFormSet
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Layout, Field, Fieldset, Div, HTML, ButtonHolder, Submit
+
 from .custom_layout_object import *
 from django.forms import ModelForm
 from .models import *
 from datetime import date
 
+# Inline Formset
+from django.forms.models import inlineformset_factory, BaseInlineFormSet
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Field, Fieldset, Div, HTML, ButtonHolder, Submit
+
+
+# Formulários de usuário
 class UserCreationFormWithEmail(UserCreationForm):
     password1 = forms.CharField(label="Password", widget=forms.PasswordInput(
-        attrs={'class': 'form-control form-control-user', 
-        'type': 'password', 'placeholder': 'Senha'}))
+        attrs={'class': 'form-control form-control-user',
+               'type': 'password', 'placeholder': 'Senha'}))
     password2 = forms.CharField(label="Confirm password", widget=forms.PasswordInput(
-        attrs={'class': 'form-control form-control-user', 
-        'type': 'password', 'placeholder': 'Repita sua senha'}))
+        attrs={'class': 'form-control form-control-user',
+               'type': 'password', 'placeholder': 'Repita sua senha'}))
 
     class Meta:
         model = User
@@ -23,19 +28,21 @@ class UserCreationFormWithEmail(UserCreationForm):
 
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control form-control-user',
-                                                 'placeholder': 'Nome de usuário'}),
+                                               'placeholder': 'Nome de usuário'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
                                                  'placeholder': 'Primeiro nome'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
-                                                 'placeholder': 'Sobrenome'}),
-                'email': forms.EmailInput(attrs={'class': 'form-control form-control-user',
-                                                 'placeholder': 'Endereço de e-mail'}),
+                                                'placeholder': 'Sobrenome'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-user',
+                                             'placeholder': 'Endereço de e-mail'}),
         }
+
     def clean_email(self):
-            email = self.cleaned_data.get("email")
-            if User.objects.filter(email=email).exists():
-                raise forms.ValidationError("Este e-mail já está cadastrado.")
-            return email
+        email = self.cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError("Este e-mail já está cadastrado.")
+        return email
+
 
 class UserChangeForm(forms.ModelForm):
     class Meta:
@@ -44,15 +51,17 @@ class UserChangeForm(forms.ModelForm):
 
         widgets = {
             'username': forms.TextInput(attrs={'class': 'form-control form-control-user',
-                                                 'placeholder': 'Nome de usuário'}),
+                                               'placeholder': 'Nome de usuário'}),
             'first_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
                                                  'placeholder': 'Primeiro nome'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control form-control-user',
-                                                 'placeholder': 'Sobrenome'}),
-                'email': forms.EmailInput(attrs={'class': 'form-control form-control-user',
-                                                 'placeholder': 'Endereço de e-mail'}),
+                                                'placeholder': 'Sobrenome'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-user',
+                                             'placeholder': 'Endereço de e-mail'}),
         }
 
+
+# Formulário de produto
 class AdicionarProdutosForm(forms.ModelForm):
     class Meta:
         model = Produto
@@ -60,31 +69,33 @@ class AdicionarProdutosForm(forms.ModelForm):
 
         widgets = {
             'nome': forms.TextInput(attrs={
-                                        'class': 'form-control',
-                                        'placeholder': 'Nome do produto'}),
+                'class': 'form-control',
+                'placeholder': 'Nome do produto'}),
             'quantidade': forms.NumberInput(attrs={
-                                        'class': 'form-control',
-                                        'step': 1}),
+                'class': 'form-control',
+                'step': 1}),
             'tipo': forms.Select(attrs={
-                                        'class': 'form-control'}),
+                'class': 'form-control'}),
             'validade': forms.DateInput(attrs={
-                                        'class': 'form-control',
-                                        'type': 'date'}),
+                'class': 'form-control',
+                'type': 'date'}),
         }
 
+
+# Formulários de receita
 class AdicionarReceitasForm(forms.ModelForm):
     class Meta:
         model = Receita
-        fields = ['nome','descricao',]
+        fields = ['nome', 'descricao', ]
 
         widgets = {
             'nome': forms.TextInput(attrs={
-                                        'class': 'form-control',
-                                        'placeholder': 'Nome da receita'}),
+                'class': 'form-control',
+                'placeholder': 'Nome da receita'}),
             'descricao': forms.Textarea(attrs={
-                                        'class': 'form-control',
-                                        'rows': '15',
-                                        'placeholder': 'Modo de preparo'}),
+                'class': 'form-control',
+                'rows': '15',
+                'placeholder': 'Modo de preparo'}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -98,30 +109,31 @@ class AdicionarReceitasForm(forms.ModelForm):
             Div(
                 Field('nome'),
                 Fieldset('Adicionar ingredientes',
-                    Formset('ingrediente')),
+                         Formset('ingrediente')),
                 Field('descricao'),
                 HTML("<br>"),
                 ButtonHolder(Submit('submit', 'Salvar')),
-                )
             )
+        )
+
 
 class AdicionarIngredientesForm(forms.ModelForm):
     class Meta:
-        model = Ingrediente 
-        fields = ['nome', 'quantidade', 'tipo',]
+        model = Ingrediente
+        fields = ['nome', 'quantidade', 'tipo', ]
 
         widgets = {
             'nome': forms.TextInput(attrs={
-                                        'class': 'form-control',
-                                        'placeholder': 'Nome do produto'}),
+                'class': 'form-control',
+                'placeholder': 'Nome do produto'}),
             'quantidade': forms.NumberInput(attrs={
-                                        'class': 'form-control',
-                                        'step': 0.5}),
+                'class': 'form-control',
+                'step': 0.5}),
             'tipo': forms.TextInput(attrs={
-                                        'class': 'form-control', 
-                                        'placeholder': 'xícara, colher, mg...'}),
+                'class': 'form-control',
+                'placeholder': 'xícara, colher, mg...'}),
         }
 
-IngredienteFormSet = inlineformset_factory(
-    Receita, Ingrediente, form = AdicionarIngredientesForm, extra = 1, can_delete = True)
 
+IngredienteFormSet = inlineformset_factory(
+    Receita, Ingrediente, form=AdicionarIngredientesForm, extra=1, can_delete=True)

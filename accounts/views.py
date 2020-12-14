@@ -1,20 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, UpdateView, DeleteView
 from django.views.generic.edit import CreateView
-from django.views.generic.base import RedirectView
 from .models import Produto, Receita, Ingrediente
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
 
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import UserChangeForm
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.models import User
 from django.db import transaction
-
-from django.http import HttpResponseRedirect
-from django.urls import reverse
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,10 +18,13 @@ from django.core.mail import send_mail
 
 from .forms import *
 
+
+# Views relacionadas ao usuário
 class SignUpView(CreateView):
     form_class = UserCreationFormWithEmail
     success_url = reverse_lazy('login')
     template_name = 'accounts/signup.html'
+
 
 class UserEditView(UpdateView):
     form_class = UserChangeForm
@@ -38,15 +37,17 @@ class UserEditView(UpdateView):
         obj.save()
         return super().form_valid(form)
 
-class UserDeleteView(LoginRequiredMixin,SuccessMessageMixin,DeleteView):
+
+class UserDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = User
     template_name = 'accounts/excluir_usuario.html'
     success_url = reverse_lazy('perfil')
     success_message = "Usuário deletado com sucesso"
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request,self.success_message)
-        return super(UserDeleteView,self).delete(request, *args, **kwargs)
+        messages.success(self.request, self.success_message)
+        return super(UserDeleteView, self).delete(request, *args, **kwargs)
+
 
 def forgot_password(request):
     if request.method == 'POST':
@@ -59,7 +60,7 @@ def forgot_password(request):
             user.save()
             message_name = 'Recuperação de Senha 10Pensa'
             message = 'A sua nova senha é: ' + \
-                newpassword + 'Não se esqueça de mudá-la!'
+                      newpassword + 'Não se esqueça de mudá-la!'
             message_email = '10pensapoliusp@gmail.com'
             recipient = user.email
 
@@ -82,6 +83,8 @@ def perfil(request):
 
     return render(request, 'accounts/perfil.html', args)
 
+
+# Views relacionadas aos produtos
 class ProdutoListView(ListView):
     model = Produto
     template_name = 'accounts/despensa.html'
@@ -89,7 +92,8 @@ class ProdutoListView(ListView):
     def get_queryset(self):
         return Produto.objects.filter(usuario=self.request.user)
 
-class ProdutoCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+
+class ProdutoCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Produto
     form_class = AdicionarProdutosForm
     template_name = 'accounts/produto_new.html'
@@ -108,7 +112,8 @@ class ProdutoCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
             field=self.object.nome,
         )
 
-class ProdutoUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+
+class ProdutoUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Produto
     template_name = 'accounts/produto_edit.html'
     form_class = AdicionarProdutosForm
@@ -127,17 +132,19 @@ class ProdutoUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
             field=self.object.nome,
         )
 
-class ProdutoDeleteView(LoginRequiredMixin,SuccessMessageMixin,DeleteView):
+
+class ProdutoDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Produto
     template_name = 'accounts/produto_delete.html'
     success_url = reverse_lazy('despensa')
     success_message = "Produto deletado com sucesso"
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request,self.success_message)
-        return super(ProdutoDeleteView,self).delete(request, *args, **kwargs)
+        messages.success(self.request, self.success_message)
+        return super(ProdutoDeleteView, self).delete(request, *args, **kwargs)
 
 
+# Views relacionadas às receitas
 class ReceitaListView(ListView):
     model = Receita
     template_name = 'accounts/receitas.html'
@@ -145,12 +152,13 @@ class ReceitaListView(ListView):
     def get_queryset(self):
         return Receita.objects.filter(usuario=self.request.user)
 
+
 class ReceitaDetailView(DetailView):
     model = Receita
     template_name = 'accounts/receita_detail.html'
 
 
-class ReceitaCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
+class ReceitaCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Receita
     form_class = AdicionarReceitasForm
     template_name = 'accounts/receita_new.html'
@@ -183,7 +191,8 @@ class ReceitaCreateView(LoginRequiredMixin,SuccessMessageMixin,CreateView):
             field=self.object.nome,
         )
 
-class ReceitaUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
+
+class ReceitaUpdateView(LoginRequiredMixin, SuccessMessageMixin, UpdateView):
     model = Receita
     template_name = 'accounts/receita_edit.html'
     form_class = AdicionarReceitasForm
@@ -216,12 +225,13 @@ class ReceitaUpdateView(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
             field=self.object.nome,
         )
 
-class ReceitaDeleteView(LoginRequiredMixin,SuccessMessageMixin,DeleteView):
+
+class ReceitaDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
     model = Receita
     template_name = 'accounts/receita_delete.html'
     success_url = reverse_lazy('receitas')
     success_message = "Receita Deletada com sucesso"
 
     def delete(self, request, *args, **kwargs):
-        messages.success(self.request,self.success_message)
-        return super(ReceitaDeleteView,self).delete(request, *args, **kwargs)
+        messages.success(self.request, self.success_message)
+        return super(ReceitaDeleteView, self).delete(request, *args, **kwargs)
